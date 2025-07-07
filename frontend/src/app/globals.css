@@ -1,0 +1,118 @@
+/* global.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Estilos personalizados */
+.custom-submenu {
+  @apply bg-white shadow-lg rounded-md;
+}
+
+.custom-subsubmenu {
+  @apply bg-gray-50 shadow-md rounded-md;
+}
+  
+.my-container {
+    @apply mx-auto px-1 py-6 text-foreground pt-[70px];
+  }
+
+.custom-spacing {
+    margin-left: 10px;
+  }
+
+  
+  .custom-tabs .ant-tabs-tab-active {
+    @apply text-black;
+  }
+  
+  .custom-tabs .ant-tabs-ink-bar {
+    @apply bg-green-500; /* Línea inferior verde para la pestaña activa */
+  }
+
+  /* Borde del Select en todos sus estados */
+.ant-select:not(.ant-select-disabled):hover .ant-select-selector,
+.ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  border-color: #C08040 !important;
+  box-shadow: 0 0 0 2px rgba(192, 128, 64, 0.2) !important;
+}
+
+.ant-select-selector {
+  border-color: #C08040 !important;
+}
+
+/* Fondo del dropdown */
+.ant-select-dropdown {
+  background-color: white !important;
+}
+
+/* Items de la lista (opcional - para mejor contraste) */
+.ant-select-item {
+  color: black !important;
+}
+
+/* Cambiar el color de fondo al pasar el mouse */
+.ant-select-item-option-active {
+  background-color: #C08040 !important; /* verde claro */
+}
+
+/* Cambiar el fondo y el color del texto de la opción seleccionada */
+.ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+  background-color: #C08040 !important; 
+}
+
+
+/* Cambiar el color de fondo y texto de la pestaña activa Formatos */
+.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #C08040 !important; 
+  font-weight: bold;
+}
+
+/*  cambiar el borde inferior de la pestaña activa Formatos */
+.ant-tabs-ink-bar {
+  background-color: #C08040 !important; 
+}
+
+/* Cambia el fondo y texto de la opción seleccionada */
+.ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+  background-color: #C08040 !important; 
+}
+/* Agrega esto al final de globals.css */
+.btn-editar {
+  background-color: #C08040 !important;
+  border-color: #C08040 !important;
+  color: #fff !important;
+}
+
+.btn-editar:hover {
+  background-color: #d68f48 !important;
+  border-color: #d68f48 !important;
+}
+
+.btn-eliminar {
+  background-color: white !important; 
+  border-color: #ff4d4f !important;
+  color: #ff0000 !important;
+}
+
+.btn-eliminar:hover {
+  background-color: whitesmoke !important;
+  border-color: #ff7875 !important;
+}
+/* Botones Guardar (mismo color que editar) */
+.btn-guardar {
+  background-color: #d68f48 !important;
+  border-color: #d68f48 !important;
+  color: #fff !important;
+}
+.btn-guardar:hover {
+  background-color: #e0a15a !important;
+  border-color: #e0a15a !important;
+}
+/* Borde del editable papel de trabajo */
+.ant-input:focus, .ant-input-focused {
+  border-color: #C08040 !important;
+  box-shadow: 0 0 0 2px rgba(214, 143, 72, 0.2) !important;
+}
+.ant-input:hover {
+  border-color: #d68f48 !important;
+}

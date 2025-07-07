@@ -1,0 +1,39 @@
+services:
+  db:
+    image: postgres:latest
+    container_name: db-prod
+    environment:
+      POSTGRES_DB: maae
+      POSTGRES_USER: maae_user
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: dockerfile.prod
+    container_name: frontend-prod
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - db
+    restart: always
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: dockerfile.prod
+    container_name: backend-prod
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    restart: always
+
+volumes:
+  postgres_data:

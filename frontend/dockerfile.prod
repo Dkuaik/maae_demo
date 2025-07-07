@@ -1,0 +1,35 @@
+# --- Etapa de construcción ---
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci
+
+COPY . .
+
+# Copia el archivo de entorno para producción
+COPY .env.production .env.production
+
+# Build de producción (Next.js tomará las variables del entorno automáticamente)
+RUN npm run build
+
+RUN npm prune --production
+
+# --- Etapa final (producción) ---
+FROM node:20-alpine AS runner
+
+WORKDIR /app
+
+ENV NODE_ENV=production
+ENV PORT=3000
+
+COPY --from=builder /app/package.json ./
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/next.config.js ./next.config.js
+
+EXPOSE 3000
+
+CMD ["npm", "start"]

@@ -1,0 +1,1 @@
+"""Driven (secondary/output) adapters package"""

@@ -1,0 +1,122 @@
+version: '3.8'
+
+services:
+  # Backend Spring Boot
+  backend:
+    build:
+      context: ./backend
+      dockerfile: dockerfile
+    container_name: maae-backend-dev
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      JAVA_OPTS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
+    ports:
+      - "8080:8080"
+      - "5005:5005"  # Puerto para debugging remoto
+    volumes:
+      - ./backend/src:/backend/src
+      - ./backend/pom.xml:/backend/pom.xml
+      - ./backend/.env:/backend/.env
+      - backend_m2_cache:/root/.m2
+    networks:
+      - maae-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Frontend Next.js
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: dockerfile
+    container_name: maae-frontend-dev
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_API_URL=http://localhost:8080
+      - NEXT_PUBLIC_LLM_API_URL=http://localhost:8000
+      - WATCHPACK_POLLING=true
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/frontend
+      - /frontend/node_modules
+      - /frontend/.next
+    depends_on:
+      - backend
+    networks:
+      - maae-network
+
+  # LLM Service Python FastAPI
+  maae-llm:
+    build:
+      context: ./maae-llm
+      dockerfile: dockerfile
+    container_name: maae-llm-dev
+    environment:
+      - PYTHONPATH=/app
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+      - RELOAD=true
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./maae-llm:/app
+      - /app/__pycache__
+      - /app/src/__pycache__
+    networks:
+      - maae-network
+    command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload", "--reload-dir", "/app/src"]
+
+  # Redis para caché y sesiones
+  redis:
+    image: redis:7-alpine
+    container_name: maae-redis-dev
+    command: redis-server --appendonly yes
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data_dev:/data
+    networks:
+      - maae-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # # Adminer para administración de base de datos (opcional)
+  # adminer:
+  #   image: adminer:latest
+  #   container_name: maae-adminer-dev
+  #   ports:
+  #     - "8081:8080"
+  #   networks:
+  #     - maae-network
+
+  # RedisInsight para administración de Redis
+  redis-insight:
+    image: redislabs/redisinsight:latest
+    container_name: maae-redis-insight-dev
+    ports:
+      - "8001:8001"
+    volumes:
+      - redis_insight_data:/db
+    networks:
+      - maae-network
+
+volumes:
+  redis_data_dev:
+    driver: local
+  redis_insight_data:
+    driver: local
+  backend_m2_cache:
+    driver: local
+
+networks:
+  maae-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

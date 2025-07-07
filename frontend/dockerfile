@@ -1,0 +1,21 @@
+# Imagen base de Node (usa la versión que prefieras)
+FROM node:18-alpine
+
+# Carpeta de trabajo dentro del contenedor
+WORKDIR /frontend
+
+# Copia solo los package*.json (para instalar dependencias)
+COPY package*.json ./
+
+# Instala las dependencias (incluye devDependencies)
+RUN npm install
+
+# Copiamos el resto del código 
+# (Aunque en dev usaremos un volumen, esto permite una primera instalación “cacheada”)
+COPY . .
+
+# Puerto habitual de Next
+EXPOSE 3000
+
+# Comando por defecto para desarrollo
+CMD ["npm", "run", "dev"]

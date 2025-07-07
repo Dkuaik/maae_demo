@@ -1,0 +1,1 @@
+"""Driven (secondary/output) ports package"""

@@ -1,0 +1,63 @@
+{
+    "cgti_nombre":"nombre",
+    "link_documentacion": "link",
+    "papeles_trabajo":[
+
+        {
+            
+            "title": "Matriz de Competencias",
+            "description": "Matriz de competencias para el curso de Desarrollo Web",
+            "objetivo_control":"value",
+            "resultado_diseño":"value",
+            "Efectividad_operativa":"value",
+            "promedio_efectividad":"value",
+            "riesgos": [
+                {     
+                    "id":"int",
+                    "factores": "value",
+                    "riesgos":"value",
+                    "impacto":"value",
+                    "probabilidad":"value",
+                    "tratamiento_riesgo":"value",
+                    "actividades_control":{
+                        "descripcion_actividad_control": "value",
+                        "tipo_control":"value",
+                        "ejecucion_control":"value",
+                        "frecuencia_control":"value"
+                    },
+                    "respuesta_riesgo":"value",
+                    "area_responsable":"value"        
+                }
+            ]
+        },
+        {
+            
+            "title": "Matriz de Competencias",
+            "description": "Matriz de competencias para el curso de Desarrollo Web",
+            "objetivo_control":"value",
+            "resultado_diseño":"value",
+            "Efectividad_operativa":"value",
+            "promedio_efectividad":"value",
+            "riesgos": [
+                {     
+                    "id":"int",
+                    "factores": "value",
+                    "riesgos":"value",
+                    "impacto":"value",
+                    "probabilidad":"value",
+                    "tratamiento_riesgo":"value",
+                    "actividades_control":{
+                        "descripcion_actividad_control": "value",
+                        "tipo_control":"value",
+                        "ejecucion_control":"value",
+                        "frecuencia_control":"value"
+                    },
+                    "respuesta_riesgo":"value",
+                    "area_responsable":"value"        
+                }
+            ]
+        }
+
+     
+        ]
+}
